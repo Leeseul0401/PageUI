@@ -209,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\desktop\bitmap2.bmp" />
-    <Image Include="..\..\..\Desktop\icon1.ico" />
     <Image Include="res\MFCApplication5.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

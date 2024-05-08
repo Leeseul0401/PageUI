@@ -59,9 +59,6 @@
     <Image Include="res\MFCApplication5.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\..\..\Desktop\icon1.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="..\..\..\desktop\bitmap2.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
