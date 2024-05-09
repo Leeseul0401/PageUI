@@ -37,29 +37,34 @@ protected:
 	HWND m_hFocus;
 public:
 	SubDlg* pSub;
-	CListCtrl m_mainList;
-	CListCtrl m_SecondList;
-	CImageList UserImgList;
+	
 
 	int iItemIndex;
 	int iItemColumn;
 	int m_isValid;
 	void OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult);
+	BOOL PreTranslateMessage(MSG* pMsg);
+	void OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate);
 	afx_msg void OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnLvnItemchangedMainList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult);
-	BOOL PreTranslateMessage(MSG* pMsg);
-private:
-	CEdit* m_pEdit;
-	static const int MAX_ROWS = 100;
-public:
-	CEdit m_editMod;
-	std::vector<CString> m_comboItems;
-	CComboBox* pComboBox;
-	CComboBox* comboBoxArray[MAX_ROWS];
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMClickSecondList(NMHDR *pNMHDR, LRESULT *pResult);
+	
+private:
+	CEdit* m_pEdit;
+	CEdit m_editMod;
+	static const int MAX_ROWS = 100;
+public:
+	std::vector<CString> m_comboItems;
+	CComboBox* pComboBox;
+	CComboBox* comboBoxArray[MAX_ROWS];
+	CListCtrl m_mainList;
+	CListCtrl m_SecondList;
+	CImageList UserImgList;
+
+	
 };

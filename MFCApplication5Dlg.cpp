@@ -247,34 +247,16 @@ HCURSOR CMFCApplication5Dlg::OnQueryDragIcon()
 void CMFCApplication5Dlg::OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult)
 {
     LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-
-    iItemIndex = pNMItemActivate->iItem;
-    iItemColumn = pNMItemActivate->iSubItem;
-
-    CRect rect;
-
-    if (iItemColumn == 0)
-    {
-        m_mainList.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
-        rect.right = rect.left + m_mainList.GetColumnWidth(0);
-    }
-    else
-    {
-        m_mainList.GetSubItemRect(iItemIndex, iItemColumn, LVIR_BOUNDS, rect);
-    }
-    m_mainList.ClientToScreen(rect);
-    this->ScreenToClient(rect);
-
-    GetDlgItem(IDC_EDIT_MOD)->SetWindowText(m_mainList.GetItemText(iItemIndex, iItemColumn));
-    GetDlgItem(IDC_EDIT_MOD)->SetWindowPos(NULL, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_SHOWWINDOW);
-    GetDlgItem(IDC_EDIT_MOD)->SetFocus();
-
+	
+	OnNMClickEditBox(pNMItemActivate);
+    
     *pResult = 0;
 }
 
 void CMFCApplication5Dlg::OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
 	*pResult = 0;
 }
  
@@ -364,6 +346,31 @@ BOOL CMFCApplication5Dlg::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
+void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate)
+{
+	iItemIndex = pNMItemActivate->iItem;
+	iItemColumn = pNMItemActivate->iSubItem;
+
+	CRect rect;
+
+	if (iItemColumn == 0)
+	{
+		m_mainList.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
+		rect.right = rect.left + m_mainList.GetColumnWidth(0);
+	}
+	else
+	{
+		m_mainList.GetSubItemRect(iItemIndex, iItemColumn, LVIR_BOUNDS, rect);
+	}
+	m_mainList.ClientToScreen(rect);
+	this->ScreenToClient(rect);
+
+	GetDlgItem(IDC_EDIT_MOD)->SetWindowText(m_mainList.GetItemText(iItemIndex, iItemColumn));
+	GetDlgItem(IDC_EDIT_MOD)->SetWindowPos(NULL, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_SHOWWINDOW);
+	GetDlgItem(IDC_EDIT_MOD)->SetFocus();
+
+}
+
 
 void CMFCApplication5Dlg::OnBnClickedOk()
 {
@@ -376,26 +383,7 @@ void CMFCApplication5Dlg::OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 
-	iItemIndex = pNMItemActivate->iItem;
-	iItemColumn = pNMItemActivate->iSubItem;
-
-	CRect rect;
-
-	if (iItemColumn == 0)
-	{
-		m_SecondList.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
-		rect.right = rect.left + m_SecondList.GetColumnWidth(0);
-	}
-	else
-	{
-		m_SecondList.GetSubItemRect(iItemIndex, iItemColumn, LVIR_BOUNDS, rect);
-	}
-	m_SecondList.ClientToScreen(rect);
-	this->ScreenToClient(rect);
-
-	GetDlgItem(IDC_EDIT_MOD)->SetWindowText(m_SecondList.GetItemText(iItemIndex, iItemColumn));
-	GetDlgItem(IDC_EDIT_MOD)->SetWindowPos(NULL, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_SHOWWINDOW);
-	GetDlgItem(IDC_EDIT_MOD)->SetFocus();
+	OnNMClickEditBox(pNMItemActivate);
 
 	*pResult = 0;
 }
