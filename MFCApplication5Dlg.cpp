@@ -77,7 +77,7 @@ BEGIN_MESSAGE_MAP(CMFCApplication5Dlg, CDialogEx)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_SUB_LIST, &CMFCApplication5Dlg::OnLvnItemchangedSubList)
 	ON_BN_CLICKED(IDC_ADD_BUTTON, &CMFCApplication5Dlg::OnBnClickedAddButton)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_MAIN_LIST, &CMFCApplication5Dlg::OnLvnItemchangedMainList)
-	ON_BN_CLICKED(IDC_BUTTON2, &CMFCApplication5Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON2, &CMFCApplication5Dlg::OnBnClickedMinusButton)
 
 	ON_NOTIFY(NM_CLICK, IDC_MAIN_LIST, &CMFCApplication5Dlg::OnNMClickMainList)
 	ON_BN_CLICKED(IDOK, &CMFCApplication5Dlg::OnBnClickedOk)
@@ -261,6 +261,42 @@ void CMFCApplication5Dlg::OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResul
 }
  
 
+void CMFCApplication5Dlg::OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
+	OnNMClickEditBox(pNMItemActivate);
+
+	*pResult = 0;
+}
+
+
+void CMFCApplication5Dlg::OnLvnItemchangedMainList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
+
+	*pResult = 0;
+}
+
+
+void CMFCApplication5Dlg::OnNMClickSecondList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	switchCheckboxState(pNMItemActivate);
+
+	*pResult = 0;
+}
+
+void CMFCApplication5Dlg::OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
+	switchCheckboxState(pNMItemActivate);
+
+	*pResult = 0;
+}
+
+
 void CMFCApplication5Dlg::OnBnClickedAddButton()
 {
 	SubDlg* subDlg = new SubDlg(this);
@@ -270,16 +306,7 @@ void CMFCApplication5Dlg::OnBnClickedAddButton()
 }
 
 
-void CMFCApplication5Dlg::OnLvnItemchangedMainList(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
-	
-	
-	*pResult = 0;
-}
-
-
-void CMFCApplication5Dlg::OnBnClickedButton2()
+void CMFCApplication5Dlg::OnBnClickedMinusButton()
 {
 	SubDlg* subDlg = new SubDlg(this);
 	subDlg->Create(IDC_SUB_DIALOG, this);
@@ -287,39 +314,6 @@ void CMFCApplication5Dlg::OnBnClickedButton2()
 	m_isValid = 0;
 }
 
-
-void CMFCApplication5Dlg::OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-
-	int itemIndex = pNMItemActivate->iItem;
-
-	// edit box 비활성화
-	GetDlgItem(IDC_EDIT_MOD)->ShowWindow(SW_HIDE);
-
-	CString str;
-	GetDlgItemText(IDC_EDIT_MOD, str);
-	if (str != "")
-	{
-		m_mainList.SetItemText(iItemIndex, iItemColumn, str);
-
-	} 
-	else
-	{
-		str = m_mainList.GetItemText(iItemIndex, iItemColumn);
-		m_mainList.SetItemText(iItemIndex, iItemColumn, str);
-	}
-
-	// 셀 누르면 행 선택돼서 체크박스 check/uncheck
-	BOOL checked;
-	if (itemIndex != -1)
-	{
-		checked = m_mainList.GetCheck(itemIndex);
-		m_mainList.SetCheck(itemIndex, !checked);
-	}
-
-	*pResult = 0;
-}
 
 BOOL CMFCApplication5Dlg::PreTranslateMessage(MSG* pMsg)
 {
@@ -371,27 +365,9 @@ void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate)
 
 }
 
-
-void CMFCApplication5Dlg::OnBnClickedOk()
+void CMFCApplication5Dlg::switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate)
 {
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CDialogEx::OnOK();
-}
 
-
-void CMFCApplication5Dlg::OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-
-	OnNMClickEditBox(pNMItemActivate);
-
-	*pResult = 0;
-}
-
-
-void CMFCApplication5Dlg::OnNMClickSecondList(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	int itemIndex = pNMItemActivate->iItem;
 
 	// edit box 비활성화
@@ -417,5 +393,12 @@ void CMFCApplication5Dlg::OnNMClickSecondList(NMHDR *pNMHDR, LRESULT *pResult)
 		checked = m_SecondList.GetCheck(itemIndex);
 		m_SecondList.SetCheck(itemIndex, !checked);
 	}
-	*pResult = 0;
 }
+
+
+void CMFCApplication5Dlg::OnBnClickedOk()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnOK();
+}
+

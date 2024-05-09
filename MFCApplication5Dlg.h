@@ -45,10 +45,11 @@ public:
 	void OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult);
 	BOOL PreTranslateMessage(MSG* pMsg);
 	void OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate);
+	void switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate);
 	afx_msg void OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedAddButton();
 	afx_msg void OnLvnItemchangedMainList(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedMinusButton();
 	afx_msg void OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult);
