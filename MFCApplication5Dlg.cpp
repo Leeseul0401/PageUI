@@ -140,15 +140,7 @@ BOOL CMFCApplication5Dlg::OnInitDialog()
 	{
 		str.Format(_T("%d"), i);
 		m_mainList.SetItem(i, 1, LVIF_TEXT, str, 0, 0, 0, NULL);
-	}
-	for (int i = 0; i < 5; i++)
-	{
-		str.Format(_T("%d"), i);
 		m_mainList.SetItem(i, 2, LVIF_TEXT, str, 0, 0, 0, NULL);
-	}
-	for (int i = 0; i < 5; i++)
-	{
-		str.Format(_T("%d"), i);
 		m_mainList.SetItem(i, 3, LVIF_TEXT, str, 0, 0, 0, NULL);
 	}
 
