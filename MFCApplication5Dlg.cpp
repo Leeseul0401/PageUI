@@ -128,30 +128,29 @@ BOOL CMFCApplication5Dlg::OnInitDialog()
 	m_mainList.InsertColumn(2, _T("Center Y"), LVCFMT_LEFT, 160);
 	m_mainList.InsertColumn(3, _T("Group"), LVCFMT_LEFT, 160);
 	m_mainList.InsertColumn(4, _T("Lower Limit"), LVCFMT_LEFT, 160);
+	CString str;
 
-	m_mainList.InsertItem(0, _T("0"));
-	m_mainList.InsertItem(1, _T("1"));
-	m_mainList.InsertItem(2, _T("2"));
-	m_mainList.InsertItem(3, _T("3"));
-	m_mainList.InsertItem(4, _T("4"));
-
-	m_mainList.SetItem(0, 1, LVIF_TEXT, _T("1"), 0, 0, 0, NULL);
-	m_mainList.SetItem(1, 1, LVIF_TEXT, _T("2"), 0, 0, 0, NULL);
-	m_mainList.SetItem(2, 1, LVIF_TEXT, _T("3"), 0, 0, 0, NULL);
-	m_mainList.SetItem(3, 1, LVIF_TEXT, _T("4"), 0, 0, 0, NULL);
-	m_mainList.SetItem(4, 1, LVIF_TEXT, _T("5"), 0, 0, 0, NULL);
-
-	m_mainList.SetItem(0, 2, LVIF_TEXT, _T("1"), 0, 0, 0, NULL);
-	m_mainList.SetItem(1, 2, LVIF_TEXT, _T("2"), 0, 0, 0, NULL);
-	m_mainList.SetItem(2, 2, LVIF_TEXT, _T("3"), 0, 0, 0, NULL);
-	m_mainList.SetItem(3, 2, LVIF_TEXT, _T("4"), 0, 0, 0, NULL);
-	m_mainList.SetItem(4, 2, LVIF_TEXT, _T("5"), 0, 0, 0, NULL);
-
-	m_mainList.SetItem(0, 3, LVIF_TEXT, _T("1"), 0, 0, 0, NULL);
-	m_mainList.SetItem(1, 3, LVIF_TEXT, _T("2"), 0, 0, 0, NULL);
-	m_mainList.SetItem(2, 3, LVIF_TEXT, _T("3"), 0, 0, 0, NULL);
-	m_mainList.SetItem(3, 3, LVIF_TEXT, _T("4"), 0, 0, 0, NULL);
-	m_mainList.SetItem(4, 3, LVIF_TEXT, _T("5"), 0, 0, 0, NULL);
+	for (int i = 0; i < 5; i++)
+	{
+		str.Format(_T("%d"), i);
+		m_mainList.InsertItem(i, str);
+	}
+	
+	for (int i = 0; i < 5; i++)
+	{
+		str.Format(_T("%d"), i);
+		m_mainList.SetItem(i, 1, LVIF_TEXT, str, 0, 0, 0, NULL);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		str.Format(_T("%d"), i);
+		m_mainList.SetItem(i, 2, LVIF_TEXT, str, 0, 0, 0, NULL);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		str.Format(_T("%d"), i);
+		m_mainList.SetItem(i, 3, LVIF_TEXT, str, 0, 0, 0, NULL);
+	}
 
 	m_SecondList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 
