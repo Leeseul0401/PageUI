@@ -44,7 +44,7 @@ public:
 	int m_isValid;
 	void OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult);
 	BOOL PreTranslateMessage(MSG* pMsg);
-	void OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate);
+	void OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CListCtrl& listControl);
 	void switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate);
 	afx_msg void OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedAddButton();

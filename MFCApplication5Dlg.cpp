@@ -248,7 +248,7 @@ void CMFCApplication5Dlg::OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult)
 {
     LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	
-	OnNMClickEditBox(pNMItemActivate);
+	OnNMClickEditBox(pNMItemActivate, m_mainList);
     
     *pResult = 0;
 }
@@ -265,7 +265,7 @@ void CMFCApplication5Dlg::OnNMDblclkSecondList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 
-	OnNMClickEditBox(pNMItemActivate);
+	OnNMClickEditBox(pNMItemActivate, m_SecondList);
 
 	*pResult = 0;
 }
@@ -340,7 +340,7 @@ BOOL CMFCApplication5Dlg::PreTranslateMessage(MSG* pMsg)
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
-void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate)
+void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CListCtrl& listControl)
 {
 	iItemIndex = pNMItemActivate->iItem;
 	iItemColumn = pNMItemActivate->iSubItem;
@@ -349,17 +349,17 @@ void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate)
 
 	if (iItemColumn == 0)
 	{
-		m_mainList.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
-		rect.right = rect.left + m_mainList.GetColumnWidth(0);
+		listControl.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
+		rect.right = rect.left + listControl.GetColumnWidth(0);
 	}
 	else
 	{
-		m_mainList.GetSubItemRect(iItemIndex, iItemColumn, LVIR_BOUNDS, rect);
+		listControl.GetSubItemRect(iItemIndex, iItemColumn, LVIR_BOUNDS, rect);
 	}
-	m_mainList.ClientToScreen(rect);
+	listControl.ClientToScreen(rect);
 	this->ScreenToClient(rect);
 
-	GetDlgItem(IDC_EDIT_MOD)->SetWindowText(m_mainList.GetItemText(iItemIndex, iItemColumn));
+	GetDlgItem(IDC_EDIT_MOD)->SetWindowText(listControl.GetItemText(iItemIndex, iItemColumn));
 	GetDlgItem(IDC_EDIT_MOD)->SetWindowPos(NULL, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_SHOWWINDOW);
 	GetDlgItem(IDC_EDIT_MOD)->SetFocus();
 
