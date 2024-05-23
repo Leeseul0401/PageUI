@@ -88,7 +88,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -187,6 +187,11 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.h" />
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBODlg.h" />
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\Combo.h" />
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\resource.h" />
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\stdafx.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MFCApplication5.h" />
     <ClInclude Include="MFCApplication5Dlg.h" />
@@ -195,6 +200,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.cpp" />
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBODlg.cpp" />
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\Combo.cpp" />
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\stdafx.cpp" />
     <ClCompile Include="MFCApplication5.cpp" />
     <ClCompile Include="MFCApplication5Dlg.cpp" />
     <ClCompile Include="SubDlg.cpp">
@@ -202,6 +211,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.rc" />
     <ResourceCompile Include="MFCApplication5.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +219,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\desktop\bitmap2.bmp" />
+    <Image Include="..\..\..\Desktop\checkcombo_demo\res\CheckCombo.ico" />
     <Image Include="res\MFCApplication5.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

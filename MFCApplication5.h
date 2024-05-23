@@ -8,8 +8,8 @@
 	#error "include 'pch.h' before including this file for PCH"
 #endif
 
-#include "resource.h"		// 주 기호입니다.
-
+#include "Resource.h"		// 주 기호입니다.
+#define MAX_SIZE_CHK 64
 
 // CMFCApplication5App:
 // 이 클래스의 구현에 대해서는 MFCApplication5.cpp을(를) 참조하세요.
@@ -19,7 +19,7 @@ class CMFCApplication5App : public CWinApp
 {
 public:
 	CMFCApplication5App();
-
+	bool checked_arr[MAX_SIZE_CHK];
 // 재정의입니다.
 public:
 	virtual BOOL InitInstance();

@@ -76,6 +76,7 @@ BOOL CMFCApplication5App::InitInstance()
 	CMFCApplication5Dlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
+
 	if (nResponse == IDOK)
 	{
 		// TODO: 여기에 [확인]을 클릭하여 대화 상자가 없어질 때 처리할

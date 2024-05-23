@@ -1,16 +1,14 @@
-﻿
-// MFCApplication5Dlg.cpp: 구현 파일
-//
-
-#include "pch.h"
+﻿#include "pch.h"
 #include "framework.h"
 #include "MFCApplication5.h"
 #include "MFCApplication5Dlg.h"
+#include "CCOMBO.h"
+#include "Combo.h"
+#include "CCOMBODlg.h"
 #include "afxdialogex.h"
 
 #include <vector>
-#include <string>
-
+#include <string>l
 #include "SubDlg.h"
 
 #ifdef _DEBUG
@@ -67,13 +65,14 @@ void CMFCApplication5Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_MAIN_LIST, m_mainList);
 	DDX_Control(pDX, IDC_SECOND_LIST, m_SecondList);
 	DDX_Control(pDX, IDC_EDIT_MOD, m_editMod);
+	DDX_Control(pDX, IDCANCEL, m_staticList);
 }
 
 BEGIN_MESSAGE_MAP(CMFCApplication5Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_NOTIFY(NM_DBLCLK, IDC_MAIN_LIST, &CMFCApplication5Dlg::OnNMDblclkMainList)
+	ON_NOTIFY(NM_DBLCLK, IDC_MAIN_LIST, &CMFCApplication5Dlg::OnDblclkMainList)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_SUB_LIST, &CMFCApplication5Dlg::OnLvnItemchangedSubList)
 	ON_BN_CLICKED(IDC_ADD_BUTTON, &CMFCApplication5Dlg::OnBnClickedAddButton)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_MAIN_LIST, &CMFCApplication5Dlg::OnLvnItemchangedMainList)
@@ -83,6 +82,7 @@ BEGIN_MESSAGE_MAP(CMFCApplication5Dlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CMFCApplication5Dlg::OnBnClickedOk)
 	ON_NOTIFY(NM_DBLCLK, IDC_SECOND_LIST, &CMFCApplication5Dlg::OnNMDblclkSecondList)
 	ON_NOTIFY(NM_CLICK, IDC_SECOND_LIST, &CMFCApplication5Dlg::OnNMClickSecondList)
+	ON_CBN_SELCHANGE(IDC_COMBO_BOX, &CMFCApplication5Dlg::OnCbnSelchangeComboBox)
 END_MESSAGE_MAP()
 
 
@@ -128,8 +128,8 @@ BOOL CMFCApplication5Dlg::OnInitDialog()
 	m_mainList.InsertColumn(2, _T("Center Y"), LVCFMT_LEFT, 160);
 	m_mainList.InsertColumn(3, _T("Group"), LVCFMT_LEFT, 160);
 	m_mainList.InsertColumn(4, _T("Lower Limit"), LVCFMT_LEFT, 160);
-	CString str;
 
+	CString str;
 	for (int i = 0; i < 5; i++)
 	{
 		str.Format(_T("%d"), i);
@@ -160,28 +160,6 @@ BOOL CMFCApplication5Dlg::OnInitDialog()
 	m_SecondList.SetItem(0, 1, LVIF_TEXT, _T("1행 2열"), 0, 0, 0, NULL);
 	m_SecondList.SetItem(1, 1, LVIF_TEXT, _T("2행 2열"), 0, 0, 0, NULL);
 	m_SecondList.SetItem(2, 1, LVIF_TEXT, _T("3행 2열"), 0, 0, 0, NULL);
-
-	int nCol = 4;
-	for (int i = 0; i < m_mainList.GetItemCount(); i++) {
-		CRect rect;
-		m_mainList.GetSubItemRect(i, nCol, LVIR_BOUNDS, rect);
-
-		// 콤보 박스 생성
-		pComboBox = new CComboBox();
-		pComboBox->Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST , rect, &m_mainList, IDC_COMBO_BOX);
-
-		// 리스트 컨트롤에 콤보 박스 삽입
-		m_mainList.SetItemData(i, nCol);
-
-		// 콤보 박스에 항목 추가
-		for (int j = 0; j < m_SecondList.GetItemCount(); j++) {
-			CString option = m_SecondList.GetItemText(j, 0);
-			pComboBox->AddString(option);
-		}
-
-		// 배열에 콤보 박스 포인터 저장
-		comboBoxArray[i] = pComboBox;
-	}
 
 	return TRUE;  
 }
@@ -235,12 +213,13 @@ HCURSOR CMFCApplication5Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CMFCApplication5Dlg::OnNMDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult)
+void CMFCApplication5Dlg::OnDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult)
 {
     LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	
 	OnNMClickEditBox(pNMItemActivate, m_mainList);
     
+	
     *pResult = 0;
 }
 
@@ -283,7 +262,7 @@ void CMFCApplication5Dlg::OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 
 	switchCheckboxState(pNMItemActivate);
-
+	
 	*pResult = 0;
 }
 
@@ -323,7 +302,7 @@ BOOL CMFCApplication5Dlg::PreTranslateMessage(MSG* pMsg)
 		}
 		else if (pMsg->wParam == VK_ESCAPE)
 		{
-			GetDlgItem(IDC_EDIT_MOD)->ShowWindow(SW_HIDE);
+			GetDlgItem(IDC_EDIT_MOD)->ShowWindow(SW_HIDE);                  
 			return TRUE;
 		}
 	}
@@ -335,13 +314,17 @@ void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CLi
 {
 	iItemIndex = pNMItemActivate->iItem;
 	iItemColumn = pNMItemActivate->iSubItem;
-
+	
 	CRect rect;
 
 	if (iItemColumn == 0)
 	{
 		listControl.GetItemRect(iItemIndex, rect, LVIR_BOUNDS);
 		rect.right = rect.left + listControl.GetColumnWidth(0);
+	}
+	else if (iItemColumn == 4)
+	{
+		CreateComboBox();
 	}
 	else
 	{
@@ -350,10 +333,10 @@ void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CLi
 	listControl.ClientToScreen(rect);
 	this->ScreenToClient(rect);
 
+
 	GetDlgItem(IDC_EDIT_MOD)->SetWindowText(listControl.GetItemText(iItemIndex, iItemColumn));
 	GetDlgItem(IDC_EDIT_MOD)->SetWindowPos(NULL, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_SHOWWINDOW);
-	GetDlgItem(IDC_EDIT_MOD)->SetFocus();
-
+	//GetDlgItem(IDC_EDIT_MOD)->SetFocus();
 }
 
 void CMFCApplication5Dlg::switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate)
@@ -363,6 +346,7 @@ void CMFCApplication5Dlg::switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate)
 
 	// edit box 비활성화
 	GetDlgItem(IDC_EDIT_MOD)->ShowWindow(SW_HIDE);
+	//GetDlgItem(IDC_COMBO_BOX)->EnableWindow(FALSE);
 
 	CString str;
 	GetDlgItemText(IDC_EDIT_MOD, str);
@@ -393,3 +377,62 @@ void CMFCApplication5Dlg::OnBnClickedOk()
 	CDialogEx::OnOK();
 }
 
+
+
+void CMFCApplication5Dlg::OnCbnSelchangeComboBox()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+void CMFCApplication5Dlg::CreateComboBox()
+{
+	int nCol = 4;
+	for (int i = 0; i < m_mainList.GetItemCount(); i++) {
+		CRect rect;
+		m_mainList.GetSubItemRect(i, nCol, LVIR_BOUNDS, rect);
+
+		// 콤보 박스 생성
+		//pComboBox = new CComboBox(); 
+		//pComboBox->Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST, rect, &m_mainList, IDC_COMBO_BOX);
+		 rect.bottom += 100; 
+		combo = new ChkCombo();
+		combo->Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, rect, &m_mainList, IDC_COMBO_BOX);
+		
+		// 리스트 컨트롤에 콤보 박스 삽입
+		m_mainList.SetItemData(i, nCol);
+
+		//// 콤보 박스에 항목 추가
+		for (int j = 0; j < m_SecondList.GetItemCount(); j++) {
+			CString option = m_SecondList.GetItemText(j, 0);
+			combo->AddString(option);
+		}
+		
+		//m_mainList.SetItemData(i, (DWORD_PTR)combo);
+
+		comboBoxArray[i] = combo;
+		
+		combo->SetCheck(0, TRUE);
+		combo->SetCheck(1, TRUE);
+		combo->SetCheck(2, TRUE);
+
+	} 
+	//int selectedIndex = pComboBox->GetCurSel();
+	/*CString selectedText;
+	CString selectedItemsText;
+	if (selectedIndex != CB_ERR)
+	{
+		
+	}
+	 
+	for (int i = 0; i < m_selectedItems.GetSize(); i++)
+	{
+		CString itemText;
+		pComboBox->GetLBText(m_selectedItems[i], itemText);
+		if (i > 0)
+		{
+			selectedItemsText += _T(", ");
+		}
+		selectedItemsText += itemText;
+	}
+	m_staticList.SetWindowText(selectedItemsText);*/
+}

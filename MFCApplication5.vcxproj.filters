@@ -33,6 +33,21 @@
     <ClInclude Include="SubDlg.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBODlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\Combo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MFCApplication5.cpp">
@@ -44,9 +59,24 @@
     <ClCompile Include="SubDlg.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBODlg.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\Combo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCApplication5.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="..\..\..\Desktop\CCOMBO - 복사본\CCOMBO\CCOMBO.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -60,6 +90,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\..\..\desktop\bitmap2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\..\..\Desktop\checkcombo_demo\res\CheckCombo.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

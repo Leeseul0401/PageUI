@@ -74,7 +74,7 @@ void SubDlg::OnBnClickedAddButton()
 	if (isValid == 1)
 	{
 		// SecondList에 원소 추가
-		pParent->m_SecondList.InsertItem(pParent->m_SecondList.GetItemCount()        , strInput);
+		pParent->m_SecondList.InsertItem(pParent->m_SecondList.GetItemCount() , strInput);
 		int count = pParent->m_mainList.GetItemCount();
 
 		for (int i = 0; i < count; i++) {
