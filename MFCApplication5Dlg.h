@@ -43,7 +43,8 @@ public:
 	int m_isValid;
 	void OnDblclkMainList(NMHDR *pNMHDR, LRESULT *pResult);
 	void OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CListCtrl& listControl);
-	void switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate);
+	void switchCheckboxStateSecondList(LPNMITEMACTIVATE pNMItemActivate);
+	void switchCheckboxStateList(LPNMITEMACTIVATE pNMItemActivate, CListCtrl& listControl);
 	void CreateComboBox();
 	BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnLvnItemchangedSubList(NMHDR *pNMHDR, LRESULT *pResult);

@@ -252,7 +252,7 @@ void CMFCApplication5Dlg::OnLvnItemchangedMainList(NMHDR *pNMHDR, LRESULT *pResu
 void CMFCApplication5Dlg::OnNMClickSecondList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	switchCheckboxState(pNMItemActivate);
+	switchCheckboxStateList(pNMItemActivate, m_SecondList);
 
 	*pResult = 0;
 }
@@ -261,7 +261,7 @@ void CMFCApplication5Dlg::OnNMClickMainList(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 
-	switchCheckboxState(pNMItemActivate);
+	switchCheckboxStateList(pNMItemActivate, m_mainList);
 	
 	*pResult = 0;
 }
@@ -339,7 +339,7 @@ void CMFCApplication5Dlg::OnNMClickEditBox(LPNMITEMACTIVATE pNMItemActivate, CLi
 	//GetDlgItem(IDC_EDIT_MOD)->SetFocus();
 }
 
-void CMFCApplication5Dlg::switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate)
+void CMFCApplication5Dlg::switchCheckboxStateList(LPNMITEMACTIVATE pNMItemActivate, CListCtrl& listControl)
 {
 
 	int itemIndex = pNMItemActivate->iItem;
@@ -352,21 +352,21 @@ void CMFCApplication5Dlg::switchCheckboxState(LPNMITEMACTIVATE pNMItemActivate)
 	GetDlgItemText(IDC_EDIT_MOD, str);
 	if (str != "")
 	{
-		m_SecondList.SetItemText(iItemIndex, iItemColumn, str);
+		listControl.SetItemText(iItemIndex, iItemColumn, str);
 
 	}
 	else
 	{
-		str = m_SecondList.GetItemText(iItemIndex, iItemColumn);
-		m_SecondList.SetItemText(iItemIndex, iItemColumn, str);
+		str = listControl.GetItemText(iItemIndex, iItemColumn);
+		listControl.SetItemText(iItemIndex, iItemColumn, str);
 	}
 
 	// 셀 누르면 행 선택돼서 체크박스 check/uncheck
 	BOOL checked;
 	if (itemIndex != -1)
 	{
-		checked = m_SecondList.GetCheck(itemIndex);
-		m_SecondList.SetCheck(itemIndex, !checked);
+		checked = listControl.GetCheck(itemIndex);
+		listControl.SetCheck(itemIndex, !checked);
 	}
 }
 
@@ -394,7 +394,8 @@ void CMFCApplication5Dlg::CreateComboBox()
 		// 콤보 박스 생성
 		//pComboBox = new CComboBox(); 
 		//pComboBox->Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST, rect, &m_mainList, IDC_COMBO_BOX);
-		 rect.bottom += 100; 
+		rect.bottom += 100; 
+		
 		combo = new ChkCombo();
 		combo->Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_VSCROLL, rect, &m_mainList, IDC_COMBO_BOX);
 		
@@ -410,10 +411,11 @@ void CMFCApplication5Dlg::CreateComboBox()
 		//m_mainList.SetItemData(i, (DWORD_PTR)combo);
 
 		comboBoxArray[i] = combo;
-		
+		/*
 		combo->SetCheck(0, TRUE);
 		combo->SetCheck(1, TRUE);
 		combo->SetCheck(2, TRUE);
+		*/
 
 	} 
 	//int selectedIndex = pComboBox->GetCurSel();
